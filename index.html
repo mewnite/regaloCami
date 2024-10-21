@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida a la aventura del mapache</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #333;
+            font-size: 3em;
+        }
+        p {
+            font-size: 1.5em;
+            color: #555;
+        }
+        button {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #5a6268;
+        }
+        .mapache-img {
+            width: 200px;
+            height: auto;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bienvenido a la aventura del mapache</h1>
+    <img src="./recursos/frente.jpeg" alt="Mapache divertido" class="mapache-img">
+    <p>¡Prepárate para resolver acertijos y descubrir el mensaje oculto!</p>
+    <button onclick="startAdventure()">Comienza la aventura</button>
+
+    <script>
+        function startAdventure() {
+            window.location.href = 'acertijo1.html';  
+        }
+    </script>
+
+</body>
+</html>

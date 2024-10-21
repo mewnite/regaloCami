@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acertijo 2 - ¿Qué imprime este código?</title>
+    <style>
+        body {
+            background-color: #f7f7f7;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #444;
+            font-size: 2.5em;
+        }
+        p {
+            font-size: 1.2em;
+            color: #666;
+        }
+        input {
+            padding: 10px;
+            font-size: 1em;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .mapache-img {
+            width: 200px;
+            height: auto;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Acertijo 2</h1>
+    <img src="/recursos/pensar.png" alt="Mapache pensativo" class="mapache-img">
+    <p>El mapache está intentando resolver un pequeño problema en Java. Aquí está el código:</p>
+    
+    <pre style="background-color: #f1f1f1; padding: 15px; text-align: left;">
+    public class Acertijo {
+        public static void main(String[] args) {
+            int x = 2000;
+            for (int i = 0; i < 23; i++) {
+                x++;
+            }
+            System.out.println(x);
+        }
+    }
+    </pre>
+
+    <p>¿Qué imprimirá este código?</p>
+    
+    <input type="text" id="answer2" placeholder="Escribe la respuesta aquí">
+    <button onclick="checkAnswer()">Verificar</button>
+
+    <script>
+        function checkAnswer() {
+            let answer = document.getElementById('answer2').value;
+            if (answer === '2023') {  // Respuesta correcta
+                alert('¡Correcto! 2023, el año en que nos conocimos 🎉');
+                window.location.href = 'acertijo3.html';  // Redirige al siguiente acertijo
+            } else {
+                alert('¡Intenta de nuevo!');
+            }
+        }
+    </script>
+
+</body>
+</html>

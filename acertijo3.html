@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acertijo 3 - Laberinto</title>
+    <style>
+        body {
+            background-color: #f7f7f7;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #444;
+            font-size: 2.5em;
+        }
+        p {
+            font-size: 1.2em;
+            color: #666;
+        }
+        .maze-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background-color: white;
+            border: 2px solid black;
+            margin: 0 auto;
+        }
+        canvas {
+            border: 2px solid #000;
+            margin-top: 20px;
+        }
+        #message {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Acertijo 3</h1>
+    <p>Ya estamos por llegar, ¡termina este laberinto para tener tu premio!</p>
+
+    <div class="maze-container">
+        <canvas id="mazeCanvas" width="300" height="300"></canvas>
+    </div>
+    <p>Traza el camino desde el "Inicio" hasta la "Meta" sin tocar las paredes.</p>
+
+    <p id="message"></p>
+
+    <script>
+        const canvas = document.getElementById('mazeCanvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+        let win = false;
+        let path = [];  // Para guardar el camino dibujado
+
+        // Coordenadas de las paredes
+        const walls = [
+             { x: 0, y: 0, width: 10, height: 200 },   // Pared izquierda
+             {x:60, y: 0, width: 10, height: 200}, // pared lateral izquierda 
+             {x:35, y: 200, width: 75, height: 10}, //pared corte ezquina inferior
+             {x:0, y: 227, width: 150, height: 10}, //pared paralela ezquina inferior
+             { x: 140, y: 116, width: 10, height: 120 },   //paralela 3 izquierda 
+             { x: 110, y: 90, width: 10, height: 120 },   //paralela 4 izquierda  
+             {x:140, y: 110, width: 95, height: 10}, //pared corte ezquina inferior
+             {x:110, y: 80, width: 170, height: 10}, //pared corte ezquina inferior
+             { x: 270, y: 90, width: 10, height: 200 },   // Pared izquierda
+             { x: 230, y: 110, width: 10, height: 167 },   // Pared izquierda
+        ];
+
+        // Dibujar laberinto simple
+        function drawMaze() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'black';
+            walls.forEach(wall => {
+                ctx.fillRect(wall.x, wall.y, wall.width, wall.height);
+            });
+
+            // Inicio y meta
+            ctx.fillStyle = 'green';  // Color de inicio
+            ctx.fillRect(10, 10, 40, 40); // Inicio
+            ctx.fillStyle = 'red';  // Color de meta
+            ctx.fillRect(250, 250, 40, 40); // Meta
+        }
+
+        drawMaze();
+
+        // Comenzar a dibujar cuando el usuario hace clic
+        canvas.addEventListener('mousedown', (e) => {
+            if (e.offsetX >= 10 && e.offsetX <= 50 && e.offsetY >= 10 && e.offsetY <= 50) {  // Dentro del área de inicio
+                drawing = true;
+                path = [];  // Reiniciar el camino
+                ctx.beginPath();
+                ctx.moveTo(e.offsetX, e.offsetY);
+                path.push({ x: e.offsetX, y: e.offsetY });
+            }
+        });
+
+        // Dibujar la línea
+        canvas.addEventListener('mousemove', (e) => {
+            if (drawing) {
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.strokeStyle = 'blue';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                path.push({ x: e.offsetX, y: e.offsetY });
+
+                // Verifica si toca las paredes
+                if (checkCollision(e.offsetX, e.offsetY)) {
+                    drawing = false;
+                    alert('¡Has tocado una pared! Intenta de nuevo.');
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    drawMaze();  // Redibujar el laberinto
+                }
+
+                // Si llega a la meta
+                if (e.offsetX >= 250 && e.offsetX <= 290 && e.offsetY >= 250 && e.offsetY <= 290) {
+                    drawing = false;
+                    win = true;
+                    document.getElementById('message').textContent = '¡Felicidades, has llegado a la meta!';
+                    window.location.href = "./final.html"
+                }
+            }
+        });
+
+        // Detener el dibujo
+        canvas.addEventListener('mouseup', () => {
+            if (!win && drawing) {
+                alert('¡Sigue intentándolo!');
+            }
+            drawing = false;
+        });
+
+        // Función para comprobar colisiones con las paredes
+        function checkCollision(x, y) {
+            return walls.some(wall => {
+                return x >= wall.x && x <= wall.x + wall.width &&
+                       y >= wall.y && y <= wall.y + wall.height;
+            });
+        }
+
+        // Inicializa el laberinto
+        drawMaze();
+
+    </script>
+
+</body>
+</html>

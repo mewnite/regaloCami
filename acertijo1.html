@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acertijo 1 - Duki y el mapache</title>
+    <style>
+        body {
+            background-color: #f7f7f7;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #444;
+            font-size: 2.5em;
+        }
+        p {
+            font-size: 1.2em;
+            color: #666;
+        }
+        input {
+            padding: 10px;
+            font-size: 1em;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .mapache-img {
+            width: 200px;
+            height: auto;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Acertijo 1</h1>
+    <img src="./recursos/sorpresa.jpeg" alt="Mapache curioso" class="mapache-img">
+    <p>El mapache está escuchando una canción de uno de tus artistas favoritos... Duki.</p>
+    <p>Completa la letra de esta famosa canción: <br> "Me siento increíble, todo me sale bien, ya no soy el de antes, ahora soy..."</p>
+    
+    <input type="text" id="answer1" placeholder="Escribe la respuesta aquí">
+    <button onclick="checkAnswer()">Verificar</button>
+
+    <script>
+        function cifrar(texto, desplazamiento) {
+            return texto.split('').map(char => {
+                if (char.match(/[a-z]/i)) {
+                    const code = char.charCodeAt(0);
+                    const base = code >= 65 && code <= 90 ? 65 : 97; // A=65, a=97
+                    return String.fromCharCode(((code - base + desplazamiento) % 26) + base);
+                }
+                return char;
+            }).join('');
+        }
+
+        const respuestaCifrada = cifrar('el mejor', 3); // Ciframos la respuesta
+
+        function checkAnswer() {
+            let answer = document.getElementById('answer1').value.toLowerCase();
+            const answerIngresadaCifrada = cifrar(answer, 3); // Ciframos la respuesta ingresada
+            if (answerIngresadaCifrada === respuestaCifrada) {
+                alert('¡Correcto! ¡Vamos al siguiente acertijo!');
+                window.location.href = 'acertijo2.html';  // Redirige al siguiente acertijo
+            } else {
+                alert('¡Intenta de nuevo!');
+            }
+        }
+    </script>
+
+</body>
+</html>
